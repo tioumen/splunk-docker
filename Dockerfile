@@ -1,8 +1,8 @@
 FROM debian:jessie
 
 ENV SPLUNK_PRODUCT splunk
-ENV SPLUNK_VERSION 7.0.0
-ENV SPLUNK_BUILD c8a78efdd40f
+ENV SPLUNK_VERSION 7.0.1
+ENV SPLUNK_BUILD 2b5b15c4ee89
 ENV SPLUNK_FILENAME splunk-${SPLUNK_VERSION}-${SPLUNK_BUILD}-Linux-x86_64.tgz
 
 ENV SPLUNK_HOME /opt/splunk
@@ -20,7 +20,7 @@ RUN apt-get update  && apt-get install -y --no-install-recommends apt-utils && a
 	&& localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
 ENV LANG en_US.utf8
 
-# pdfgen dependency
+# pdfgen dependency --> needed to be able to send PDF report ... at least needed for your users.
 RUN apt-get update && apt-get install -y libgssapi-krb5-2 && rm -rf /var/lib/apt/lists/*
 
 # Download official Splunk release, verify checksum and unzip in /opt/splunk
@@ -44,7 +44,7 @@ RUN apt-get update && apt-get install -y wget sudo \
 COPY entrypoint.sh /sbin/entrypoint.sh
 RUN chmod +x /sbin/entrypoint.sh
 
-# Copy new license
+# Copy new license --> Get a licence on splunk.com, I have mine but can't share it :)
 #COPY ./Splunk_Enterprise_Q3FY17.lic /var/opt/splunk/etc/licenses/download-trial/Splunk_Enterprise_Q3FY17.lic
 
 # Ports Splunk Web, Splunk Daemon, KVStore, Splunk Indexing Port, Network Input, HTTP Event Collector
@@ -52,7 +52,7 @@ EXPOSE 8000/tcp 8089/tcp 8191/tcp 9997/tcp 1514 8088/tcp
 
 WORKDIR /opt/splunk
 
-# Configurations folder, var folder for everything (indexes, logs, kvstore)
+# Configurations folder, var folder for everything (indexes, logs, kvstore) --> enable persistence that's better!
 VOLUME [ "/opt/splunk/etc", "/opt/splunk/var" ]
 
 ENTRYPOINT ["/sbin/entrypoint.sh"]
