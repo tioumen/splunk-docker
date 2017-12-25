@@ -1,5 +1,7 @@
 FROM debian:jessie
 
+LABEL maintainer "tioumen()gmail.com"
+
 ENV SPLUNK_PRODUCT splunk
 ENV SPLUNK_VERSION 7.0.1
 ENV SPLUNK_BUILD 2b5b15c4ee89
@@ -52,7 +54,7 @@ EXPOSE 8000/tcp 8089/tcp 8191/tcp 9997/tcp 1514 8088/tcp
 
 WORKDIR /opt/splunk
 
-# Configurations folder, var folder for everything (indexes, logs, kvstore) --> enable persistence that's better!
+# Configurations folder, var folder for everything (indexes, logs, kvstore) --> enable persistence that's bet!
 VOLUME [ "/opt/splunk/etc", "/opt/splunk/var" ]
 
 ENTRYPOINT ["/sbin/entrypoint.sh"]
