@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Checking if git is installed
-if [ `which git` -ne 0 ] then
+[[ `which git` -ne 0 ]] then
     echo "Git not available on your system or in your PATH"
 else
 
