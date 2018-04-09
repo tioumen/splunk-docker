@@ -9,5 +9,5 @@ else
 fi
 
 # starting
-echo "Your are going to install Splunk docker ..." && slepp 3
+echo "Your are going to install Splunk docker ..." && sleep 3
 docker-compose -f /tmp/splunk-docker/Dockerfile
